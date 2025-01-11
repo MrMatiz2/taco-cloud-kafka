@@ -1,6 +1,7 @@
 package com.example.tacocloudkafka.services.listeners;
 
 import com.example.tacoclouddomain.entities.TacoOrder;
+import com.example.tacoclouddomain.kitchen.KitchenOrder;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
@@ -9,15 +10,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderListenerKafka {
 
-    private final KitchenListenerKafka kitchenListenerKafka;
+    private final KitchenOrder kitchenOrder;
 
-    public OrderListenerKafka(KitchenListenerKafka kitchenListenerKafka) {
-        this.kitchenListenerKafka = kitchenListenerKafka;
+    public OrderListenerKafka(KitchenOrder kitchenOrder) {
+        this.kitchenOrder = kitchenOrder;
     }
 
     @KafkaListener(topics = "tacocloud.orders.topic")
     public void receiveOrder(@Payload TacoOrder order) {
-        kitchenListenerKafka.displayOrder(order);
+        kitchenOrder.displayOrder(order);
     }
 
 }
